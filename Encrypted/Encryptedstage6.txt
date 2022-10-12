@@ -1,0 +1,78 @@
+package tictactoe
+
+import java.io.File
+fun shiftEncryption(strInput: String,num: Int): String {
+    var strEnc = ""
+    for (i in 0..strInput.lastIndex) {
+        if ((strInput[i].code <= 'Z'.code - num && strInput[i].isUpperCase())||
+            (strInput[i].code <= 'z'.code - num  && strInput[i].isLowerCase()) )
+        {strEnc = strEnc + (strInput[i] + num)}
+        else if (!strInput[i].isLetter()) strEnc = strEnc + strInput[i]
+        else strEnc = strEnc + (strInput[i] + num - 26)
+    }
+    return strEnc
+}
+fun shiftDecryption(strInput: String,num: Int): String {
+    var strEnc = ""
+    for (i in 0..strInput.lastIndex) {
+        if ((strInput[i].code >= 'A'.code + num && strInput[i].isUpperCase())
+            || (strInput[i].code >= 'a'.code + num && strInput[i].isLowerCase())
+        ) {
+            strEnc = strEnc + (strInput[i] - num)
+        } else if (!strInput[i].isLetter()) strEnc = strEnc + strInput[i]
+        else strEnc = strEnc + (strInput[i] - num + 26)
+    }
+    return strEnc
+}
+fun unicodeEncryption(strInput: String,num: Int): String {
+    var strEnc = ""
+    for (i in 0..strInput.lastIndex) {
+        strEnc = strEnc + (strInput[i] + num)
+
+    }
+
+    return strEnc
+}
+fun unicodeDecryption(strInput: String,num: Int): String {
+    var strEnc = ""
+    for (i in 0..strInput.lastIndex) {
+        strEnc = strEnc + (strInput[i] - num)
+    }
+    return strEnc
+}
+fun main(args: Array<String>) {
+    var op = "enc"
+    var num = 0
+    var strInput = ""
+    var strOutput = ""
+    var fileNameOut = ""
+    var alg = "shift"
+    for (i in 0..args.lastIndex) {
+        if (args[i] == "-key") num = args[i + 1].toInt()
+        if (args[i] == "-mode") op = args[i + 1]
+        if (args[i] == "-data") strInput = args[i + 1]
+        if (args[i] == "-alg") alg = args[i + 1]
+        if (args[i] == "-in") {
+            val fileNameIn = args[i + 1]
+            strInput = File(fileNameIn).readText()
+        }
+        if (args[i] == "-out")  fileNameOut = args[i + 1]
+
+    }
+    when  {
+        (op == "enc" && alg == "unicode") -> strOutput = unicodeEncryption(strInput, num)
+        op == "dec" && alg == "unicode" -> strOutput = unicodeDecryption(strInput, num)
+        op == "enc" && alg == "shift" -> strOutput = shiftEncryption(strInput, num)
+        op == "dec" && alg == "shift" -> strOutput = shiftDecryption(strInput, num)
+
+    }
+ 
+
+    if (fileNameOut.isEmpty()) {
+        println(strOutput)
+    }
+    else {
+        val myFile = File(fileNameOut)
+        myFile.writeText(strOutput)
+    }
+}

@@ -1,0 +1,51 @@
+package tictactoe
+
+import java.io.File
+
+fun encrypt(strInput: String,num: Int): String {
+    var strEnc = ""
+    for (i in 0..strInput.lastIndex) {
+        strEnc = strEnc + (strInput[i] + num)
+
+    }
+
+    return strEnc
+}
+fun decryption(strInput: String,num: Int): String {
+    var strEnc = ""
+    for (i in 0..strInput.lastIndex) {
+        strEnc = strEnc + (strInput[i] - num)
+    }
+    return strEnc
+}
+fun main(args: Array<String>) {
+    var op = "enc"
+    var num = 0
+    var strInput = ""
+    var strOutput = ""
+    var fileNameOut = ""
+    for (i in 0..args.lastIndex) {
+        if (args[i] == "-key") num = args[i + 1].toInt()
+        if (args[i] == "-mode") op = args[i + 1]
+        if (args[i] == "-data") strInput = args[i + 1]
+        if (args[i] == "-in") {
+            val fileNameIn = args[i + 1]
+            strInput = File(fileNameIn).readText()
+        }
+        if (args[i] == "-out")  fileNameOut = args[i + 1]
+
+    }
+    when (op) {
+        "enc" -> strOutput = encrypt(strInput, num)
+        "dec" -> strOutput = decryption(strInput, num)
+    }
+
+
+    if (fileNameOut.isEmpty()) {
+        println(strOutput)
+    }
+    else {
+        val myFile = File(fileNameOut)
+        myFile.writeText(strOutput)
+    }
+}

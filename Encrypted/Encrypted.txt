@@ -1,0 +1,14 @@
+fun main(args: Array<String>) {
+    val str = "we found a treasure!"
+    val alphabet = "-abcdefghijklmnopqrstuvwxyz "
+    var str2 = ""
+    for (i in 0..str.lastIndex - 1) {
+        for (j in 0..alphabet.lastIndex)
+        if (str[i] == alphabet[j]) {
+            str2 = str2 + alphabet.reversed()[j]
+        }
+    }
+    val strEncrypted = str2.replace("-"," ") + "!"
+    println(str2)
+    println(strEncrypted)
+}

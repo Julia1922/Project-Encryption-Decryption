@@ -1,0 +1,23 @@
+fun shiftEncryption(strInput: String,num: Int) {
+    var strEnc = ""
+    for (i in 0..strInput.lastIndex) {
+        if ((strInput[i].code <= 'Z'.code - num && strInput[i].isUpperCase())||
+            (strInput[i].code <= 'z'.code - num  && strInput[i].isLowerCase()) )
+        {strEnc = strEnc + (strInput[i] + num)}
+        else if (!strInput[i].isLetter()) strEnc = strEnc + strInput[i]
+        else strEnc = strEnc + (strInput[i] + num - 26)
+    }
+    println(strEnc)
+}
+fun shiftDecryption(strInput: String,num: Int) {
+    var strEnc = ""
+    for (i in 0..strInput.lastIndex) {
+        if ((strInput[i].code >= 'A'.code + num && strInput[i].isUpperCase())
+            || (strInput[i].code >= 'a'.code + num && strInput[i].isLowerCase())
+        ) {
+            strEnc = strEnc + (strInput[i] - num)
+        } else if (!strInput[i].isLetter()) strEnc = strEnc + strInput[i]
+        else strEnc = strEnc + (strInput[i] - num + 26)
+    }
+    print(strEnc)
+}

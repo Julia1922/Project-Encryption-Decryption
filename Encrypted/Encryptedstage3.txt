@@ -1,0 +1,26 @@
+package tictactoe
+
+fun encrypt(strInput: String,num: Int): String {
+    var strEnc = ""
+    for (i in 0..strInput.lastIndex) {
+        strEnc = strEnc + (strInput[i] + num)
+
+    }
+
+    return strEnc
+}
+fun decryption(strInput: String,num: Int): String {
+    var strEnc = ""
+    for (i in 0..strInput.lastIndex) {
+        strEnc = strEnc + (strInput[i] - num)
+    }
+    return strEnc
+}
+fun main(args: Array<String>) {
+    val op = readln()
+    var strInput = readln()
+    val num  = readln().toInt()
+    when(op){
+        "enc" -> println(encrypt(strInput, num))
+        "dec" -> println(decryption(strInput, num))
+    }

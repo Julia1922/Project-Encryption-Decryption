@@ -1,0 +1,11 @@
+fun main(args: Array<String>) {
+    var strInput = readln()
+    var strEnc = ""
+    val num  = readln().toInt()
+    for (i in 0..strInput.lastIndex) {
+        if(strInput[i].code <= 'z'.code - num ) {strEnc = strEnc + (strInput[i] + num)}
+        else strEnc = strEnc + (strInput[i] + num - 26)
+    }
+    val ch = ' ' + num
+    println(strEnc.replace("$ch",  " "))
+}
